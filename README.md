@@ -1,77 +1,128 @@
-# NxAngularNest
+# 📦 nx-angular-nest-box
 
-<a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
+A fullstack monorepo built with [Nx](https://nx.dev) that integrates:
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is almost ready ✨.
+- 🛠 **NestJS API** for file uploads and folder management using Box Node SDK
+- 💻 **Angular frontend** for drag-and-drop file upload, showing upload progress, and displaying Box folders in a Windows Explorer-style tree
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/getting-started/intro#learn-nx?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+---
 
-## Finish your remote caching setup
+## 📁 Project Structure
 
-[Click here to finish setting up your workspace!](https://cloud.nx.app/connect/h34luBIX9s)
-
-
-## Run tasks
-
-To run tasks with Nx use:
-
-```sh
-npx nx <target> <project-name>
+```
+nx-angular-nest-box/
+├── apps/
+│   ├── api/         # NestJS backend (Box SDK integration)
+│   └── web/         # Angular frontend (UI with upload + tree)
+├── libs/            # Shared libraries (optional)
+├── .nx/             # Nx cache
+├── dist/            # Build outputs
+└── README.md
 ```
 
-For example:
+---
 
-```sh
-npx nx build myproject
+## 🚀 Getting Started
+
+### 1. Clone and Install
+
+```bash
+git clone https://github.com/<your-username>/nx-angular-nest-box.git
+cd nx-angular-nest-box
+npm install
 ```
 
-These targets are either [inferred automatically](https://nx.dev/concepts/inferred-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) or defined in the `project.json` or `package.json` files.
+---
 
-[More about running tasks in the docs &raquo;](https://nx.dev/features/run-tasks?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+### 2. Configure Box SDK
 
-## Add new projects
+In `apps/api/`, create a `.env` file:
 
-While you could add new projects to your workspace manually, you might want to leverage [Nx plugins](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) and their [code generation](https://nx.dev/features/generate-code?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) feature.
-
-To install a new plugin you can use the `nx add` command. Here's an example of adding the React plugin:
-```sh
-npx nx add @nx/react
+```env
+BOX_CLIENT_ID=your_box_client_id
+BOX_CLIENT_SECRET=your_box_client_secret
+BOX_DEVELOPER_TOKEN=your_box_dev_token
 ```
 
-Use the plugin's generator to create new projects. For example, to create a new React app or library:
+> ⚠️ Use [Box Developer Token](https://developer.box.com/guides/authentication/developer-tokens/) for development. For production, use OAuth2 or JWT.
 
-```sh
-# Generate an app
-npx nx g @nx/react:app demo
+---
 
-# Generate a library
-npx nx g @nx/react:lib some-lib
+### 3. Run the Application
+
+#### 🔧 Backend (NestJS):
+
+```bash
+npx nx serve api
 ```
 
-You can use `npx nx list` to get a list of installed plugins. Then, run `npx nx list <plugin-name>` to learn about more specific capabilities of a particular plugin. Alternatively, [install Nx Console](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) to browse plugins and generators in your IDE.
+Runs at: `http://localhost:3000`
 
-[Learn more about Nx plugins &raquo;](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects) | [Browse the plugin registry &raquo;](https://nx.dev/plugin-registry?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+#### 🖥 Frontend (Angular):
 
+```bash
+npx nx serve web
+```
 
-[Learn more about Nx on CI](https://nx.dev/ci/intro/ci-with-nx#ready-get-started-with-your-provider?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+Runs at: `http://localhost:4200`
 
-## Install Nx Console
+---
 
-Nx Console is an editor extension that enriches your developer experience. It lets you run tasks, generate code, and improves code autocompletion in your IDE. It is available for VSCode and IntelliJ.
+## 💡 Features
 
-[Install Nx Console &raquo;](https://nx.dev/getting-started/editor-setup?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+### Backend API (NestJS)
 
-## Useful links
+- `POST /upload`: Upload files to Box
+- `GET /folders`: Retrieve folder and file structure as a tree
+- `POST /folders`: Create new folders on Box
+- Error handling, logging, and ready for extension with Kafka, Saga, etc.
 
-Learn more:
+### Frontend UI (Angular)
 
-- [Learn more about this workspace setup](https://nx.dev/getting-started/intro#learn-nx?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects)
-- [Learn about Nx on CI](https://nx.dev/ci/intro/ci-with-nx?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [Releasing Packages with Nx release](https://nx.dev/features/manage-releases?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
-- [What are Nx plugins?](https://nx.dev/concepts/nx-plugins?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+- Drag-and-drop multi-file upload
+- File upload progress
+- Tree view of Box folders and files
+- Modular and scalable architecture
 
-And join the Nx community:
-- [Discord](https://go.nx.dev/community)
-- [Follow us on X](https://twitter.com/nxdevtools) or [LinkedIn](https://www.linkedin.com/company/nrwl)
-- [Our Youtube channel](https://www.youtube.com/@nxdevtools)
-- [Our blog](https://nx.dev/blog?utm_source=nx_project&utm_medium=readme&utm_campaign=nx_projects)
+---
+
+## ⚙️ Tech Stack
+
+| Layer       | Technology                  |
+|-------------|-----------------------------|
+| Frontend    | Angular, RxJS               |
+| Backend     | NestJS, REST API            |
+| Cloud SDK   | Box Node SDK                |
+| Monorepo    | Nx                          |
+| UI Framework| Angular Material / Tailwind (optional) |
+
+---
+
+## 🔧 Useful Nx Commands
+
+| Task                         | Command                            |
+|------------------------------|-------------------------------------|
+| Run API                      | `npx nx serve api`                 |
+| Run Web                      | `npx nx serve web`                 |
+| Build both                   | `npx nx build api && nx build web` |
+| View dependency graph        | `npx nx graph`                     |
+
+---
+
+## 📦 Future Ideas
+
+- Add Kafka or RabbitMQ for event-driven orchestration
+- Use Saga pattern for complex workflows
+- Add authentication (Box OAuth2 or Auth0)
+
+---
+
+## 📝 License
+
+MIT © [Your Name]
+
+---
+
+## 📬 Contact
+
+Open an issue or pull request on GitHub if you want to contribute or ask questions.
