@@ -1,2 +1,3 @@
-<app-nx-welcome></app-nx-welcome>
+<h1 *ngIf="userName">Welcome, {{ userName }}</h1>
+<button *ngIf="!userName" (click)="login()">Login with Box</button>
 <router-outlet></router-outlet>
